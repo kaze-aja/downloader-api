@@ -1,0 +1,21 @@
+{
+  "name": "downloader-api",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./app"
+  },
+  "dependencies": {
+    "@distube/ytdl-core": "^4.14.4",
+    "@tobyg74/tiktok-api-dl": "^1.1.9",
+    "axios": "^1.7.7",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "dotenv": "^16.4.5",
+    "express": "~4.16.1",
+    "express-validator": "^7.2.0",
+    "http-errors": "^2.0.0",
+    "morgan": "~1.9.1",
+    "uuid": "^10.0.0"
+  }
+}

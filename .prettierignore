@@ -1,0 +1,4 @@
+*.lock
+*.json
+*.config.js
+.prettierrc.json
