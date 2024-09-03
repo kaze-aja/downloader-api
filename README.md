@@ -11,6 +11,8 @@
 $ git clone <repo_url>
 # Go into the repository
 $ cd downloader-api
+# Copy env.example to .env
+$ cp .env.example .env
 # Install dependencies
 $ npx yarn install
 # Start the server
