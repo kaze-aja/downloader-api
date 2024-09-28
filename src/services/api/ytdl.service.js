@@ -20,14 +20,22 @@ const YtdlService = {
             let info = await ytdl.getInfo(url);
             let formats = info.formats.filter((format) => format.container === 'mp4' && format.hasVideo === true && format.hasAudio === true);
             let { title, description, author, video_url, thumbnails } = info.videoDetails;
-    
+
             // add filtered formats to response
             this.response = { title, description, author, video_url, thumbnails, formats };
 
             // return response
             return response.status(200).json(Response.success(200, this.response, 'Successfully get all available video formats'));
         } catch (error) {
-            return response.status(500).json(Response.error(500, error.message));
+            if (request.app.get('env') === 'development') {
+                if (typeof error === 'object') {
+                    return response.status(403).json(Response.error(403, error));
+                } else {
+                    return response.status(500).json(Response.error(500, String(error)));
+                }
+            } else {
+                return response.status(500).json(Response.error(500, 'Server error.'));
+            }
         }
     },
     store: async function (request, response) {
