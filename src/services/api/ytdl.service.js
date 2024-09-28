@@ -11,6 +11,25 @@ require('dotenv').config();
  */
 const YtdlService = {
     response: [],
+    index: async function (request, response) {
+        try {
+            // request body validations
+            let { url } = await validations(request, response, { location: 'body' });
+
+            // get all video info
+            let info = await ytdl.getInfo(url);
+            let formats = info.formats.filter((format) => format.container === 'mp4' && format.hasVideo === true && format.hasAudio === true);
+            let { title, description, author, video_url, thumbnails } = info.videoDetails;
+    
+            // add filtered formats to response
+            this.response = { title, description, author, video_url, thumbnails, formats };
+
+            // return response
+            return response.status(200).json(Response.success(200, this.response, 'Successfully get all available video formats'));
+        } catch (error) {
+            return response.status(500).json(Response.error(500, error.message));
+        }
+    },
     store: async function (request, response) {
         try {
             // request body validations
