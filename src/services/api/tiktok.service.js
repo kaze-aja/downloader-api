@@ -12,6 +12,35 @@ require('dotenv').config();
  */
 const TiktokService = {
     response: [],
+    info: async function (request, response) {
+        try {
+            // request body validations
+            let { url } = await validations(request, response, { location: 'body' });
+
+            // get video info
+            let video = await Tiktok.Downloader(url, {
+                version: 'v2', //  version: "v1" | "v2" | "v3"
+                getVideoInfoOnly: true
+            });
+
+            // add video info to response
+            this.response = video;
+
+            // return response
+            return response.status(200).json(Response.success(200, this.response, 'Successfully get video info'));
+        } catch (error) {
+            if (request.app.get('env') === 'development') {
+                if (typeof error === 'object') {
+                    console.log(error);
+                    return response.status(403).json(Response.error(403, error));
+                } else {
+                    return response.status(500).json(Response.error(500, String(error)));
+                }
+            } else {
+                return response.status(500).json(Response.error(500, 'Server error.'));
+            }
+        }
+    },
     store: async function (request, response) {
         try {
             // request body validations
