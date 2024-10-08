@@ -1,6 +1,6 @@
 const { validationResult, matchedData } = require('express-validator')
 
-const validations = function(req, res, { location }) {
+const validations = function(req, _, { location }) {
     let errors = validationResult(req).formatWith(({ msg }) => {
         return `${msg}`
     })
