@@ -8,9 +8,9 @@ const logger = require('morgan');
 
 const indexRouter = require('./src/routes/index.js');
 
-const app = express();
+const { APP_URL, PORT, IS_DEV } = require('./src/config/constants.config.js');
 
-const PORT = process.env.PORT || 3000;
+const app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -23,15 +23,15 @@ app.set('json spaces', 2);
 app.use('/', indexRouter);
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
+app.use(function (_, _, next) {
     next(createError(404));
 });
 
 // error handler
-app.use(function (err, req, res) {
+app.use(function (err, _, res) {
     // set locals, only providing error in development
     res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
+    res.locals.error = IS_DEV ? err : {};
 
     // render the error page
     res.status(err.status || 500);
@@ -39,7 +39,7 @@ app.use(function (err, req, res) {
 });
 
 app.listen(PORT, () => {
-    console.log('SERVER LISTEN ON PORT:', PORT);
+    console.log(`🔥 Server listening on ${APP_URL}`);
 });
 
 module.exports = app;
