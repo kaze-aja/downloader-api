@@ -7,4 +7,7 @@ module.exports = class YtdlController {
     static async store(req, res) {
         await YtdlService.store(req, res);
     }
+    static async search(req, res) {
+        await YtdlService.search(req, res);
+    }
 };
