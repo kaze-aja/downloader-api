@@ -9,5 +9,5 @@ module.exports = class YtdlController {
     }
     static async search(req, res) {
         await YtdlService.search(req, res);
-    }
+    } 
 };
